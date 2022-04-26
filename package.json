@@ -1,12 +1,15 @@
 {
-  "name": "screeps-typescript-starter",
+  "name": "screeps",
   "version": "3.0.0",
-  "description": "",
+  "description": "My Screeps code",
   "main": "index.js",
   "//": "If you add or change the names of destinations in screeps.json, make sure you update these scripts to reflect the changes",
   "scripts": {
-    "lint": "eslint \"src/**/*.ts\"",
-    "build": "rollup -c",
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint:eslint": "eslint \"src/**/*.ts\"",
+    "lint:prettier": "prettier --check ./src",
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
+    "build": "yarn lint && rollup -c",
     "push-main": "rollup -c --environment DEST:main",
     "push-pserver": "rollup -c --environment DEST:pserver",
     "push-season": "rollup -c --environment DEST:season",
@@ -17,54 +20,60 @@
     "watch-main": "rollup -cw --environment DEST:main",
     "watch-pserver": "rollup -cw --environment DEST:pserver",
     "watch-season": "rollup -cw --environment DEST:season",
-    "watch-sim": "rollup -cw --environment DEST:sim"
+    "watch-sim": "rollup -cw --environment DEST:sim",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": "eslint --cache",
+    "src/**/*.**": "prettier --check --ignore-unknown"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/screepers/screeps-typescript-starter.git"
+    "url": "git+https://github.com/moontai0724/screeps.git"
   },
-  "author": "",
+  "author": "moontai0724 <moontai0724@gmail.com>",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/screepers/screeps-typescript-starter/issues"
+    "url": "https://github.com/moontai0724/screeps/issues"
   },
-  "homepage": "https://github.com/screepers/screeps-typescript-starter#readme",
-  "engines": {
-    "node": "10.x || 12.x"
-  },
+  "homepage": "https://github.com/moontai0724/screeps#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^20.0.0",
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
+    "@rollup/plugin-commonjs": "^21.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@types/chai": "^4.1.6",
-    "@types/lodash": "3.10.2",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^13.13.1",
+    "@types/lodash": "4.14.182",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.25",
     "@types/screeps": "^3.2.3",
-    "@types/sinon": "^5.0.5",
+    "@types/sinon": "^10.0.11",
     "@types/sinon-chai": "^3.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "@typescript-eslint/parser": "^4.29.1",
-    "@typescript-eslint/typescript-estree": "^4.29.1",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/typescript-estree": "^5.20.0",
     "chai": "^4.2.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "lodash": "^3.10.1",
-    "mocha": "^5.2.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "lodash": "^4.17.21",
+    "mocha": "^9.2.2",
     "prettier": "^2.3.2",
     "rollup": "^2.56.2",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-screeps": "^1.0.1",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "sinon": "^6.3.5",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "sinon": "^13.0.2",
     "sinon-chai": "^3.2.0",
     "ts-node": "^10.2.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.7.0-dev.20220420"
   },
   "dependencies": {
-    "source-map": "~0.6.1"
+    "source-map": "^0.7.3"
   }
 }

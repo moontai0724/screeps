@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { SourceMapConsumer } from "source-map";
 
 export class ErrorMapper {
@@ -6,10 +7,17 @@ export class ErrorMapper {
 
   public static get consumer(): SourceMapConsumer {
     if (this._consumer == null) {
-      this._consumer = new SourceMapConsumer(require("main.js.map"));
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+      const rawSourceMap = require("main.js.map");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      void new SourceMapConsumer(rawSourceMap).then(value => {
+        this._consumer = value;
+        return this._consumer;
+      });
     }
 
-    return this._consumer;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._consumer!;
   }
 
   // Cache previously mapped traces to improve performance
@@ -39,7 +47,7 @@ export class ErrorMapper {
       if (match[2] === "main") {
         const pos = this.consumer.originalPositionFor({
           column: parseInt(match[4], 10),
-          line: parseInt(match[3], 10)
+          line: parseInt(match[3], 10),
         });
 
         if (pos.line != null) {

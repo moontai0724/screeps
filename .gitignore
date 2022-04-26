@@ -44,6 +44,9 @@ nbproject
 *.sublime-workspace
 .idea
 
+# ESLint cache
+.eslintcache
+
 # =========================
 # Operating System Files
 # =========================
