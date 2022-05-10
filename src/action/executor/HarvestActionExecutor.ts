@@ -18,7 +18,9 @@ export default class HarvestActionExecutor extends ActionExecutor {
     }
 
     if (target instanceof Source && target.energy === 0) {
-      return this.clearTarget(creep, "target source empty");
+      // return this.clearTarget(creep, "target source empty");
+      this.log(creep, "INFO", "Target source is empty, waiting regeneration: ", target.ticksToRegeneration.toString());
+      return OK;
     }
 
     if (target instanceof Mineral && target.mineralAmount === 0) {
