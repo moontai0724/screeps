@@ -4,5 +4,6 @@ interface TransferActionTarget extends ActionTarget<Creep | PowerCreep | AnyStor
   progress: {
     current: number;
     pending: number;
+    final: number;
   };
 }

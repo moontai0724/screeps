@@ -3,5 +3,6 @@ interface RepairActionTarget extends ActionTarget<Structure> {
   progress: {
     current: number;
     pending: number;
+    final: number;
   };
 }

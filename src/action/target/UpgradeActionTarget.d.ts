@@ -3,5 +3,6 @@ interface UpgradeActionTarget extends ActionTarget<StructureController> {
   progress: {
     current: number;
     pending: number;
+    final: number;
   };
 }

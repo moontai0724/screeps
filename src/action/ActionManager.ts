@@ -1,12 +1,59 @@
-import ActionExecutor from "./executor/ActionExecutor";
-import BuildActionExecutor from "./executor/BuildActionExecutor";
-import HarvestActionExecutor from "./executor/HarvestActionExecutor";
-import RepairActionExecutor from "./executor/RepairActionExecutor";
-import TransferActionExecutor from "./executor/TransferActionExecutor";
-import UpgradeActionExecutor from "./executor/UpgradeActionExecutor";
-import WithdrawActionExecutor from "./executor/WithdrawActionExecutor";
+import {
+  ActionChecker,
+  BuildActionChecker,
+  HarvestActionChecker,
+  RepairActionChecker,
+  TransferActionChecker,
+  UpgradeActionChecker,
+  WithdrawActionChecker,
+} from "./checker";
+import {
+  ActionExecutor,
+  BuildActionExecutor,
+  HarvestActionExecutor,
+  RepairActionExecutor,
+  TransferActionExecutor,
+  UpgradeActionExecutor,
+  WithdrawActionExecutor,
+} from "./executor";
 
 export default class ActionManager {
+  public static init(force = false): void {
+    if (Memory.targets && !force) return;
+
+    Memory.targets = {
+      assigned: new Map(),
+      idle: new Map(),
+      available: {
+        withdraw: new Map(),
+        harvest: new Map(),
+        upgrade: new Map(),
+        repair: new Map(),
+        build: new Map(),
+        transfer: new Map(),
+      },
+    };
+  }
+
+  public static getChecker(action: ActionConstant): typeof ActionChecker {
+    switch (action) {
+      case "build":
+        return BuildActionChecker;
+      case "harvest":
+        return HarvestActionChecker;
+      case "repair":
+        return RepairActionChecker;
+      case "transfer":
+        return TransferActionChecker;
+      case "upgrade":
+        return UpgradeActionChecker;
+      case "withdraw":
+        return WithdrawActionChecker;
+      default:
+        throw new Error(`[ERROR] Getting checker of unknown action: ${action}`);
+    }
+  }
+
   public static getExecutor(action: ActionConstant): typeof ActionExecutor {
     switch (action) {
       case "build":
@@ -22,7 +69,7 @@ export default class ActionManager {
       case "withdraw":
         return WithdrawActionExecutor;
       default:
-        throw new Error(`[ERROR] Unknown action: ${action}`);
+        throw new Error(`[ERROR] Getting executor of unknown action: ${action}`);
     }
   }
 }

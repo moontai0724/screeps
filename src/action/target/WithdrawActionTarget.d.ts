@@ -4,5 +4,6 @@ interface WithdrawActionTarget extends ActionTarget<AnyStoreStructure | Tombston
   progress: {
     current: number;
     pending: number;
+    final: number;
   };
 }

@@ -1,0 +1,3 @@
+interface BasicRequestData {
+  type: RequestTypeConstant;
+}

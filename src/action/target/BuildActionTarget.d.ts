@@ -3,5 +3,6 @@ interface BuildActionTarget extends ActionTarget<ConstructionSite> {
   progress: {
     current: number;
     pending: number;
+    final: number;
   };
 }
